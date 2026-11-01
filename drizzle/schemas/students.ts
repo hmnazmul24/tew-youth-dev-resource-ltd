@@ -255,3 +255,73 @@ export const enrollmentNotes = snakeCase.table(
         timeStamp: timestamp().defaultNow().notNull(),
     },
 )
+
+export const typingCertificates = snakeCase.table(
+    "typing_certificates",
+    {
+        id,
+
+        name: varchar("name", {
+            length: 150,
+        }).notNull(),
+
+        roll: varchar("roll", {
+            length: 30,
+        }).notNull(),
+
+        userId: text("user_id")
+            .notNull()
+            .references(() => organizations.id, {
+                onDelete: "cascade",
+            }),
+
+        wpm: integer("wpm").notNull(),
+
+        createdAt,
+        updatedAt,
+    },
+    (table) => [
+        index("typing_certificates_user_id_idx").on(
+            table.userId,
+        ),
+        index("typing_certificates_roll_idx").on(
+            table.roll,
+        ),
+    ],
+)
+
+export const designCertificates = snakeCase.table(
+    "design_certificates",
+    {
+        id,
+
+        name: varchar("name", {
+            length: 150,
+        }).notNull(),
+
+        roll: varchar("roll", {
+            length: 30,
+        }).notNull(),
+
+        userId: text("user_id")
+            .notNull()
+            .references(() => organizations.id, {
+                onDelete: "cascade",
+            }),
+
+        session: varchar("session", {
+            length: 100,
+        }).notNull(),
+
+        createdAt,
+        updatedAt,
+    },
+    (table) => [
+        index("design_certificates_user_id_idx").on(
+            table.userId,
+        ),
+        index("design_certificates_roll_idx").on(
+            table.roll,
+        ),
+    ],
+)

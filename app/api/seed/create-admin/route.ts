@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     }
     await auth.api.signUpEmail({
         body: {
-            name: "ADMIN",
+            name: "Hm Nazmul",
             email: company_config.COMPANY_ADMIN_EMAIL,
             password: "tewydrpass",
         },

@@ -4,6 +4,9 @@ import {
     boolean,
     snakeCase,
     pgEnum,
+    varchar,
+    integer,
+    index,
 } from "drizzle-orm/pg-core"
 import { createdAt, id, updatedAt } from "../helpers"
 import { organizations, users } from "./auth"
