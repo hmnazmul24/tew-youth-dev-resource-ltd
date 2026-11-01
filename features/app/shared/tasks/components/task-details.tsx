@@ -21,6 +21,8 @@ import {
     Clock,
     ListTodo,
     UserRound,
+    Phone,
+    MapPin,
 } from "lucide-react"
 import { Dispatch, SetStateAction } from "react"
 import { changeTaskStatus } from "../actions"
@@ -90,6 +92,7 @@ export default function TaskDetailDialog({
                 <Separator />
 
                 <div className="space-y-5">
+                    {/* Description */}
                     <section className="space-y-2">
                         <h3 className="flex items-center gap-2 text-sm font-semibold">
                             <ListTodo className="size-4" />
@@ -109,6 +112,75 @@ export default function TaskDetailDialog({
                         </div>
                     </section>
 
+                    {/* Student Information */}
+                    {(task?.studentName ||
+                        task?.phoneNumber ||
+                        task?.address) && (
+                        <>
+                            <Separator />
+
+                            <section className="space-y-3">
+                                <h3 className="flex items-center gap-2 text-sm font-semibold">
+                                    <UserRound className="size-4" />
+                                    Student Information
+                                </h3>
+
+                                <div className="grid gap-4 rounded-lg border p-4 sm:grid-cols-2">
+                                    {/* Student Name */}
+                                    {task.studentName && (
+                                        <div className="space-y-1">
+                                            <p className="text-xs font-medium text-muted-foreground">
+                                                Student Name
+                                            </p>
+
+                                            <p className="text-sm font-medium">
+                                                {
+                                                    task.studentName
+                                                }
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {/* Phone Number */}
+                                    {task.phoneNumber && (
+                                        <div className="space-y-1">
+                                            <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                                                <Phone className="size-3.5" />
+                                                Phone Number
+                                            </p>
+
+                                            <a
+                                                href={`tel:${task.phoneNumber}`}
+                                                className="text-sm font-medium hover:underline"
+                                            >
+                                                {
+                                                    task.phoneNumber
+                                                }
+                                            </a>
+                                        </div>
+                                    )}
+
+                                    {/* Address */}
+                                    {task.address && (
+                                        <div className="space-y-1 sm:col-span-2">
+                                            <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                                                <MapPin className="size-3.5" />
+                                                Address
+                                            </p>
+
+                                            <p className="whitespace-pre-wrap break-words text-sm">
+                                                {
+                                                    task.address
+                                                }
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            </section>
+                        </>
+                    )}
+
+                    {/* Task Metadata */}
                     <section className="grid gap-4 sm:grid-cols-2">
                         <div className="space-y-2">
                             <h3 className="flex items-center gap-2 text-sm font-semibold">

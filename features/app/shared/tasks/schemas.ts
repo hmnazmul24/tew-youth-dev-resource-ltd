@@ -10,6 +10,16 @@ export const taskSchema = z.object({
 
     description: z.string().nullable().optional(),
 
+    studentName: z.string().optional(),
+    phoneNumber: z
+        .string()
+        .regex(
+            /^(?:\+88|88)?01[3-9]\d{8}$/,
+            "Enter a valid Bangladeshi phone number",
+        )
+        .or(z.literal("")),
+    address: z.string().optional(),
+
     category: z.enum(taskCategories).optional(),
 
     dueDate: z.date({

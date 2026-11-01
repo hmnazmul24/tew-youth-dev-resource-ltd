@@ -43,8 +43,8 @@ export async function oneTimePayment({
 
 export const getPendingTaskReminders = withPermission(
     { tasks: ["view"] },
-    async ({ org, user }) => {
-        const role = user.role
+    async ({ org, orgMemberRole }) => {
+        const role = orgMemberRole
 
         return db.query.tasks.findMany({
             where: {
@@ -63,6 +63,7 @@ export const getPendingTaskReminders = withPermission(
                 id: true,
                 title: true,
                 dueDate: true,
+                phoneNumber: true,
                 category: true,
             },
             orderBy: (tasks, { asc }) => [

@@ -28,6 +28,9 @@ export function AddTaskForm({
     const defaultValues: TaskSchemaType = {
         title: "",
         description: "",
+        studentName: "",
+        phoneNumber: "",
+        address: "",
         category: "General",
         dueDate: new Date(),
         assignedTo: "all",
@@ -70,6 +73,26 @@ export function AddTaskForm({
                             name="title"
                             children={(field) => (
                                 <field.TextField label="Task Title" />
+                            )}
+                        />
+                        <form.AppField
+                            name="studentName"
+                            children={(field) => (
+                                <field.TextField label="Student Name (optional)" />
+                            )}
+                        />
+
+                        <form.AppField
+                            name="phoneNumber"
+                            children={(field) => (
+                                <field.TextField label="Phone Number (optional)" />
+                            )}
+                        />
+
+                        <form.AppField
+                            name="address"
+                            children={(field) => (
+                                <field.TextareaField label="Address (optional)" />
                             )}
                         />
 

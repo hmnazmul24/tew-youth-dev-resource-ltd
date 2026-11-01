@@ -25,6 +25,9 @@ export const tasks = snakeCase.table("tasks", {
     // Generic content fields (automatically mapped to snake_case by your helper)
     title: text().notNull(),
     description: text(),
+    studentName: text(),
+    phoneNumber: text(),
+    address: text(),
     category: categoryEnum().default("General"),
 
     dueDate: timestamp().notNull(), // maps to due_date automatically

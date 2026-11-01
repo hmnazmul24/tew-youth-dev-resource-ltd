@@ -1,15 +1,14 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { createColumnHelper } from "@tanstack/react-table"
 import {
     Check,
     Eye,
     MoreHorizontal,
-    Pencil,
     Trash2,
 } from "lucide-react"
-import { useState } from "react"
 import { useMutation } from "@tanstack/react-query"
 
 import { createSelectColumn } from "@/components/table/columns/create-select-column"
@@ -17,6 +16,13 @@ import { DataTableColumnHeader } from "@/components/table/data-table-column-head
 import { DataTableFeatures } from "@/components/table/data-table-features"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -100,6 +106,7 @@ function TaskActions({ task }: { task: Task }) {
                             }
                         >
                             <Check className="mr-2 size-4 text-muted-foreground" />
+
                             {isCompleted
                                 ? "Mark as pending"
                                 : "Mark as completed"}
@@ -136,6 +143,7 @@ function TaskActions({ task }: { task: Task }) {
 export const tasksColumns = columnHelper.columns([
     createSelectColumn<Task>(),
 
+    // Task title
     columnHelper.accessor("title", {
         header: ({ column }) => (
             <DataTableColumnHeader
@@ -150,6 +158,40 @@ export const tasksColumns = columnHelper.columns([
         ),
     }),
 
+    // Student name
+    columnHelper.accessor("studentName", {
+        header: "Student Name",
+        cell: ({ row }) => (
+            <span className="font-medium">
+                {row.original.studentName || "—"}
+            </span>
+        ),
+    }),
+
+    // Phone number
+    columnHelper.accessor("phoneNumber", {
+        header: "Phone Number",
+        cell: ({ row }) => (
+            <span className="whitespace-nowrap">
+                {row.original.phoneNumber || "—"}
+            </span>
+        ),
+    }),
+
+    // Address
+    columnHelper.accessor("address", {
+        header: "Address",
+        cell: ({ row }) => (
+            <span
+                className="block max-w-[200px] truncate"
+                title={row.original.address || ""}
+            >
+                {row.original.address || "—"}
+            </span>
+        ),
+    }),
+
+    // Category
     columnHelper.accessor("category", {
         header: "Category",
         cell: ({ row }) => (
@@ -159,6 +201,7 @@ export const tasksColumns = columnHelper.columns([
         ),
     }),
 
+    // Due date
     columnHelper.accessor("dueDate", {
         header: ({ column }) => (
             <DataTableColumnHeader
@@ -172,8 +215,14 @@ export const tasksColumns = columnHelper.columns([
             ).toLocaleDateString(),
     }),
 
+    // Status with dropdown filter
     columnHelper.accessor("isCompleted", {
-        header: "Status",
+        header: ({ column }) => (
+            <DataTableColumnHeader
+                column={column}
+                title="Status"
+            />
+        ),
         cell: ({ row }) => (
             <Badge
                 variant={
@@ -186,6 +235,7 @@ export const tasksColumns = columnHelper.columns([
                 {row.original.isCompleted && (
                     <Check className="size-3" />
                 )}
+
                 {row.original.isCompleted
                     ? "Completed"
                     : "Pending"}
@@ -193,6 +243,7 @@ export const tasksColumns = columnHelper.columns([
         ),
     }),
 
+    // Actions
     columnHelper.display({
         id: "actions",
         header: () => (

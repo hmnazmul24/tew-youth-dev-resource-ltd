@@ -8,6 +8,7 @@ import {
     CalendarDays,
     CheckCheck,
     ListTodo,
+    Phone,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -74,27 +75,57 @@ export function TaskReminder() {
                     {tasks.slice(0, 3).map((task) => (
                         <div
                             key={task.id}
-                            className="flex items-start gap-3 rounded-xl border p-3"
+                            className="flex items-center gap-3 rounded-xl border p-3"
                         >
-                            <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted">
+                            <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted">
                                 <ListTodo className="size-4 text-muted-foreground" />
                             </div>
 
+                            {/* Main Content Info */}
                             <div className="min-w-0 flex-1">
                                 <p className="break-words text-sm font-medium">
                                     {task.title}
                                 </p>
 
-                                <div className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-                                    <CalendarDays className="size-3.5" />
-                                    <span>
-                                        Due{" "}
-                                        {new Date(
-                                            task.dueDate,
-                                        ).toLocaleDateString()}
-                                    </span>
+                                <div className="mt-1 flex flex-col gap-1 text-xs text-muted-foreground">
+                                    <div className="flex items-center gap-1.5">
+                                        <CalendarDays className="size-3.5" />
+                                        <span>
+                                            Due{" "}
+                                            {new Date(
+                                                task.dueDate,
+                                            ).toLocaleDateString()}
+                                        </span>
+                                    </div>
+
+                                    {/* Conditional Phone Info Label */}
+                                    {task.phoneNumber && (
+                                        <span className="font-mono text-[11px] text-muted-foreground/80">
+                                            {
+                                                task.phoneNumber
+                                            }
+                                        </span>
+                                    )}
                                 </div>
                             </div>
+
+                            {/* Call Action Button */}
+                            {task.phoneNumber && (
+                                <Button
+                                    nativeButton={false}
+                                    render={
+                                        <a
+                                            href={`tel:${task.phoneNumber}`}
+                                            title={`Call ${task.phoneNumber}`}
+                                        >
+                                            <Phone className="size-4" />
+                                        </a>
+                                    }
+                                    variant="ghost"
+                                    size="icon"
+                                    className="size-8 shrink-0 rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                                ></Button>
+                            )}
                         </div>
                     ))}
 
