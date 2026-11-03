@@ -14,8 +14,8 @@ export async function sendEmailResetPassword(
     firstName: string,
 ) {
     const res = await resend.emails.send({
-        from: "Acme <onboarding@resend.dev>",
-        to: ["delivered@resend.dev"],
+        from: "Acme <noreply@yourdomain.com>",
+        to: [email],
         subject: "Reset your password",
         react: ResetPasswordTemplate({
             firstName,
@@ -30,8 +30,8 @@ export async function sendEmailBranchApproved(
     props: ApproveBranchEmailTemplateProps,
 ) {
     const res = await resend.emails.send({
-        from: "Acme <onboarding@resend.dev>",
-        to: ["delivered@resend.dev"],
+        from: "Acme <noreply@yourdomain.com>",
+        to: [props.email],
         subject: "Your Branch has been approved",
         react: BranchApprovedTemplate(props),
     })
